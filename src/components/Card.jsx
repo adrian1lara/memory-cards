@@ -1,16 +1,19 @@
+import { Box, Image, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
-import  '../styles/Card.css'
 
 export default function Card({ handleClick, character }) {
 
     return (
         <>
-            <div
+            <Box p={4}
             onClick={() => handleClick(character)}
             >
-            <img src={character.src} alt={character.name} />
-            <p>{character.name}</p>
-            </div>
+            <Image  
+            boxSize="250px"
+            src={character.src}
+            alt={character.name} />
+            <Text>{character.name}</Text>
+            </Box>
         </>
     )
 }
