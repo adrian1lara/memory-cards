@@ -1,18 +1,24 @@
-import { Box, Image, Text } from '@chakra-ui/react'
+import { Box, Center, Image, Text } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
 export default function Card({ handleClick, character }) {
 
     return (
         <>
-            <Box p={4}
+            <Box p={{ base: 2, md: 4 }}
+            borderWidth='1px'
+            borderRadius='lg'
+            cursor='pointer'
             onClick={() => handleClick(character)}
             >
             <Image  
-            boxSize="250px"
+            boxSize={{ base: '150px', md: '250px' }}
             src={character.src}
             alt={character.name} />
-            <Text>{character.name}</Text>
+            <Center>
+                <Text>{character.name}</Text>
+            </Center>
+            
             </Box>
         </>
     )

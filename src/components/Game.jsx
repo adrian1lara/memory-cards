@@ -19,7 +19,6 @@ export default function Game() {
         if (availableCharacters.length >= 3) {
             shuffleCharacters = shuffleArray(availableCharacters).slice(0, 3);
         } else {
-            // Si no hay suficientes personajes no clickeados, obtenemos tres al azar
             const shuffledAllCharacters = shuffleArray(allCharacters);
             shuffleCharacters = shuffledAllCharacters.slice(0, 3);
         }
