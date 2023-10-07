@@ -1,7 +1,7 @@
 import Card from './Card'
 import characters from '../characters'
 import { useState, useEffect } from 'react'
-import '../styles/Card.css'
+import { Button, Heading, Wrap, WrapItem, Text } from '@chakra-ui/react';
 
 export default function Game() {
     const [allCharacters] = useState(characters);
@@ -86,25 +86,36 @@ export default function Game() {
 
     return (
         <>
-            <h1>Memory Cards</h1>
+            <Heading as='h1'>
+                One Piece Memory Cards
+            </Heading>
+
             <p>Score: {score}</p>
-            <div className='card-container'>
-                {shownCharacter.map(character => (
-                    <Card
-                        key={character.id}
-                        handleClick={handleCardClick}
-                        character={character}
-                    />
-                ))}
-            </div>
+                <Wrap>
+                    <WrapItem>
+                    {shownCharacter.map(character => (
+                        <Card
+                            key={character.id}
+                            handleClick={handleCardClick}
+                            character={character}
+                        />
+                    ))}
+                    </WrapItem>
+                </Wrap>
             {result !== '' && (
-                <p>{result}</p>
+                <Text>{result}</Text>
             )}
             {result === 'win' && score === 7 && (
-                <button onClick={handleRestart}>Restart</button>
+                <>
+                <Text>You won the game!</Text>
+                <Button onClick={handleRestart}>Restart</Button>
+                </>
             )}
             {result === 'lose' && (
-                <button onClick={handleRestart}>Restart</button>
+                <>
+                <Text>You lost the game!</Text>
+                <Button onClick={handleRestart}>Restart</Button>
+                </>
             )}
         </>
     )
