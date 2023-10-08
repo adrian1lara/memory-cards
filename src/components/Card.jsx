@@ -6,6 +6,7 @@ export default function Card({ handleClick, character }) {
     return (
         <>
             <Box p={{ base: 2, md: 4 }}
+            m={2}
             borderWidth='1px'
             borderRadius='lg'
             cursor='pointer'
