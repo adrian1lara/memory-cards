@@ -1,7 +1,9 @@
 import Card from './Card'
 import characters from '../characters'
+import GameOver from './GameOver';
 import { useState, useEffect } from 'react'
-import { Button, Heading, Wrap, WrapItem, Text } from '@chakra-ui/react';
+import { Wrap, Box } from '@chakra-ui/react';
+import Scores from './Scores';
 
 export default function Game() {
     const [allCharacters] = useState(characters);
@@ -10,6 +12,7 @@ export default function Game() {
     const [result, setResult] = useState('');
     const [clickCounter, setClickCounter] = useState(0);
     const [isClicked, setIsClicked] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         const availableCharacters = allCharacters.filter(character => !character.clicked);
@@ -22,10 +25,19 @@ export default function Game() {
             const shuffledAllCharacters = shuffleArray(allCharacters);
             shuffleCharacters = shuffledAllCharacters.slice(0, 3);
         }
-    
         setShownCharacter(shuffleCharacters);
     
     }, [allCharacters, clickCounter]);
+
+    useEffect(() => {
+        if (score === 7) {
+            setResult('win');
+            setIsOpen(true);
+        } else if(result === 'lose') {
+            setResult('lose');
+            setIsOpen(true);
+        }
+    }, [score, result]);
 
     const stateRoundResult = (character) => {
         if(character.clicked) {
@@ -51,7 +63,6 @@ export default function Game() {
             handleScore();
             setIsClicked(false);
         }
-
         setClickCounter(clickCounter + 1);
     }
 
@@ -60,13 +71,15 @@ export default function Game() {
         setShownCharacter([]);
         setResult('');
         setIsClicked(false);
+        setClickCounter(0);
+        setIsOpen(false);
         characters.forEach(character => {
             character.clicked = false;
         });
 
         const availableCharacters = allCharacters.filter(character => !character.clicked);
 
-        if (availableCharacters.length >= 3) {
+        if (availableCharacters.length > 3) {
             const shuffleCharacters = shuffleArray(availableCharacters).slice(0, 3);
             setShownCharacter(shuffleCharacters);
         }
@@ -85,13 +98,10 @@ export default function Game() {
 
     return (
         <>
-            <Heading as='h1'>
-                One Piece Memory Cards
-            </Heading>
+            <Scores score={score} result={result} />
+            <Box border={'1px solid black'}>
 
-            <p>Score: {score}</p>
                 <Wrap>
-                    <WrapItem>
                     {shownCharacter.map(character => (
                         <Card
                             key={character.id}
@@ -99,23 +109,9 @@ export default function Game() {
                             character={character}
                         />
                     ))}
-                    </WrapItem>
                 </Wrap>
-            {result !== '' && (
-                <Text>{result}</Text>
-            )}
-            {result === 'win' && score === 7 && (
-                <>
-                <Text>You won the game!</Text>
-                <Button onClick={handleRestart}>Restart</Button>
-                </>
-            )}
-            {result === 'lose' && (
-                <>
-                <Text>You lost the game!</Text>
-                <Button onClick={handleRestart}>Restart</Button>
-                </>
-            )}
+            </Box>
+            <GameOver isOpen={isOpen} result={result} handleRestart={handleRestart}/>
         </>
     )
 }
