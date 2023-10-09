@@ -2,7 +2,7 @@ import Card from './Card'
 import characters from '../characters'
 import GameOver from './GameOver';
 import { useState, useEffect } from 'react'
-import { Wrap, Box } from '@chakra-ui/react';
+import { Wrap, Box, Center } from '@chakra-ui/react';
 import Scores from './Scores';
 
 export default function Game() {
@@ -98,10 +98,14 @@ export default function Game() {
 
     return (
         <>
-            <Scores score={score} result={result} />
-            <Box border={'1px solid black'}>
-
-                <Wrap>
+            <Scores score={score} result={result}/>
+            <Center>
+            <Box mt={4}
+                p={1}
+                >
+                <Wrap
+                    justify="center"
+                >
                     {shownCharacter.map(character => (
                         <Card
                             key={character.id}
@@ -111,6 +115,7 @@ export default function Game() {
                     ))}
                 </Wrap>
             </Box>
+            </Center>
             <GameOver isOpen={isOpen} result={result} handleRestart={handleRestart}/>
         </>
     )

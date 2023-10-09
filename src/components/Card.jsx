@@ -7,17 +7,31 @@ export default function Card({ handleClick, character }) {
         <>
             <Box p={{ base: 2, md: 4 }}
             m={2}
-            borderWidth='1px'
             borderRadius='lg'
             cursor='pointer'
             onClick={() => handleClick(character)}
+            _hover={{
+                boxShadow: 'lg',
+                transform: 'scale(1.05)'
+
+            }}
+            transition='all 0.3s ease-in-out'
+            bg={'#232D3F'}
+            border={'none'}
             >
             <Image  
-            boxSize={{ base: '150px', md: '250px' }}
+            boxSize={{ base: '150px', md: '220px' }}
             src={character.src}
-            alt={character.name} />
+            alt={character.name}
+            borderRadius={'sm'}
+             />
             <Center>
-                <Text>{character.name}</Text>
+                <Text color={'white'} mt={2}
+                fontSize={{ base: 'md', md: 'lg' }}
+                textTransform={'uppercase'}
+                fontWeight={'medium'}
+                letterSpacing={'wider'}
+                >{character.name}</Text>
             </Center>
             
             </Box>
